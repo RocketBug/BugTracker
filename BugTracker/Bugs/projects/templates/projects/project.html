@@ -1,0 +1,34 @@
+{% extends 'bugtracker/base.html' %}
+{%block content%}
+<div class="container-fluid">
+    
+        <div class="row">
+          <div class="col-sm">
+            <form action = "/projects/addProject/" onsubmit="return validateform()" method="POST" class="form-inline m-3" name="Bug_Form">{% csrf_token %}
+                <div class="card bg-light mb-3" style="max-width: 25rem;">
+                    <div class="card-header">
+                        <input class="form-control w-100" type="text" placeholder="Enter Project Title" name="project_title">
+                    </div>
+                    <div class="card-body">
+                        <textarea class="form-control" name="project_description" rows="3" cols="35" placeholder="Enter Project description."></textarea>
+                        <button class="btn btn-outline-success mt-3" type="submit">Add</button>
+                    </div>
+                </div>
+            </form>
+          </div>
+
+          <div class="col-sm">
+            <div class="container m-3">
+                {% for project in all_projects %}
+                <div class="card m-2" style="width: 18rem;">
+                    <div class="card-body">
+                      <h5 class="card-title"><a href="/home/{{ project.id }}" class="card-link">{{ project.project_title }}</a></h5>
+                      <p class="card-text">{{ project.project_description }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+          </div>
+        </div>
+</div>
+{%endblock content%}

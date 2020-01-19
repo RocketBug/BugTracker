@@ -1,0 +1,12 @@
+{%block bug_content%}
+<div class="card text-white bg-danger mx-auto mt-2" style="max-width: 18rem;">
+    <div class="card-header pb-1">{{ bug.content_title }} <p class="text-sm">{{ bug.content_time|date:"d/m/y-h:i:s a"}}</p></div>
+    <div class="card-body">
+        <h5 class="card-title">{{ bug.content }}</h5>
+        <p class="card-text">{{ bug.content_description }}</p>
+        <form action="/home/delBug/{{bug.id}}/" method="post" class="form-inline m-auto" >{% csrf_token %}
+            <button class="btn btn-outline-light my-2 my-sm-0" type="submit">delete</button>
+        </form>
+    </div>
+</div>
+{%endblock%}

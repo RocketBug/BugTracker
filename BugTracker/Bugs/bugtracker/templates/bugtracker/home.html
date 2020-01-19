@@ -1,0 +1,127 @@
+{%extends 'bugtracker/base.html' %}
+{% load static %}
+
+{%block content%}
+      <h1 class="display-4">Bug Tracker <small class="text-muted">fix it</small></h1>
+
+      <div class="container-fluid">
+
+      <div class="row">
+        <div class="col-sm">
+            <form action = "/home/addBug/" onsubmit="return validateform()" method="POST" class="form-inline m-3" name="Bug_Form">{% csrf_token %}
+                <div class="card bg-light mb-3" style="max-width: 25rem;">
+                    <div class="card-header">
+                        <input class="form-control mr-sm-2" type="text" placeholder="Enter Bug Title" name="bug_title">
+                        <select class="custom-select" name="bug_levels">
+                            <option selected>Bug Level</option>
+                            <option value="Critical">Critical</option>
+                            <option value="Major">Major</option>
+                            <option value="Minor">Minor</option>
+                            <option value="Trivial">Trivial</option>
+                        </select>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title"><input class="form-control w-100" type="text" placeholder="Enter bug" name="content"></h5>
+                        <textarea class="form-control" name="bug_description" rows="3" cols="35" placeholder="Enter Bug description."></textarea>
+                        <button class="btn btn-outline-success mt-3" type="submit">Add</button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+
+        <div class="col-sm">
+            <div class="card border-danger m-3" style="max-width: 18rem;">
+            <div class="card-body text-danger">
+            <h5 class="card-title">Critical Bugs</h5>
+            {% for bug in all_bugs %}
+                {% if bug.content_type == 'Critical' %}
+                    <div class="card text-white bg-danger mx-auto mt-2" style="max-width: 18rem;">
+                    <div class="card-header pb-1">{{ bug.content_title }} <p class="text-sm">{{ bug.content_time|date:"d/m/y-h:i:s a"}}</p></div>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ bug.content }}</h5>
+                        <p class="card-text">{{ bug.content_description }}</p>
+                        <p class="card-text">{{ user.username }}</p>
+                        <form action="/home/delBug/{{bug.id}}/" method="post" class="form-inline m-auto" >{% csrf_token %}
+                            <button class="btn btn-outline-light my-2 my-sm-0" type="submit">delete</button>
+                        </form>
+                    </div>
+                    </div>
+                {%endif%}
+            {%endfor%}
+            </div>
+            </div>
+        </div>
+        
+        <div class="col-sm">
+            <div class="card border-warning m-3" style="max-width: 18rem;">
+            <div class="card-body text-warning">
+            <h5 class="card-title">Major Bugs</h5>
+            {% for bug in all_bugs %}        
+                {% if bug.content_type == 'Major' %}
+                    <div class="card text-white bg-warning mx-auto mt-2" style="max-width: 18rem;">
+                    <div class="card-header pb-1">{{ bug.content_title }} <p class="text-sm">{{ bug.content_time|date:"d/m/y-h:i:s a"}}</p></div>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ bug.content }}</h5>
+                        <p class="card-text">{{ bug.content_description }}</p>
+                        <p class="card-text">{{ user.username }}</p>
+                        <form action="/home/delBug/{{bug.id}}/" method="post" class="form-inline m-auto" >{% csrf_token %}
+                            <button class="btn btn-outline-light my-2 my-sm-0" type="submit">delete</button>
+                        </form>
+                    </div>
+                    </div>
+                {%endif%}
+            {%endfor%}
+            </div>
+            </div>
+        </div>
+
+        <div class="col-sm">
+            <div class="card border-primary m-3" style="max-width: 18rem;">
+            <div class="card-body text-primary">
+            <h5 class="card-title">Minor Bugs</h5>
+            {% for bug in all_bugs %}
+                {% if bug.content_type == 'Minor' %}
+                <div class="card text-white bg-primary mx-auto mt-2" style="max-width: 18rem;">
+                    <div class="card-header pb-1">{{ bug.content_title }} <p class="text-sm">{{ bug.content_time|date:"d/m/y-h:i:s a"}}</p></div>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ bug.content }}</h5>
+                        <p class="card-text">{{ bug.content_description }}</p>
+                        <p class="card-text">{{ user.username }}</p>
+                        <form action="/home/delBug/{{bug.id}}/" method="post" class="form-inline m-auto" >{% csrf_token %}
+                            <button class="btn btn-outline-light my-2 my-sm-0" type="submit">delete</button>
+                        </form>
+                    </div>
+                    </div>
+                {%endif%}
+            {%endfor%}
+            </div>
+            </div>
+        </div>
+        
+        <div class="col-sm">
+            <div class="card border-secondary m-3" style="max-width: 18rem;">
+            <div class="card-body text-secondary">
+            <h5 class="card-title">Trivial Bugs</h5>
+            {% for bug in all_bugs %}
+                {% if bug.content_type == 'Trivial' %}
+                <div class="card text-white bg-secondary mx-auto mt-2" style="max-width: 18rem;">
+                    <div class="card-header pb-1">{{ bug.content_title }} <p class="text-sm">{{ bug.content_time|date:"d/m/y-h:i:s a"}}</p></div>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ bug.content }}</h5>
+                        <p class="card-text">{{ bug.content_description }}</p>
+                        <p class="card-text">{{ user.username }}</p>
+                        <form action="/home/delBug/{{bug.id}}/" method="post" class="form-inline m-auto" >{% csrf_token %}
+                            <button class="btn btn-outline-light my-2 my-sm-0" type="submit">delete</button>
+                        </form>
+                    </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+            </div>
+            </div>
+        </div>
+        </div>
+    </div>
+
+{% endblock %}
